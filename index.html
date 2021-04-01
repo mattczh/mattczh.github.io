@@ -1,21 +1,45 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<!DOCTYPE HTML>
+<html>
 <head>
-   <script type="text/javascript" src="https://static.sketchfab.com/api/sketchfab-viewer-1.4.2.js"></script>
-   <script type="text/javascript"  src="js/SketchfabAPIUtility.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sketchfab Viewer API example</title>
+
+    <!-- Insert this script -->
+    <script type="text/javascript" src="https://static.sketchfab.com/api/sketchfab-viewer-1.9.0.js"></script>
 </head>
-   <body>
-   <iframe id="api-frame" width="80%" height="400"  allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
+<body>
+    <!-- Insert an empty iframe -->
+    <iframe src="" id="api-frame" allow="autoplay; fullscreen; vr" allowvr allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
+    <!-- Initialize the viewer -->
+    <script type="text/javascript">
+    var iframe = document.getElementById( 'api-frame' );
+    var uid = '7w7pAfrCfjovwykkEeRFLGw5SXS';
+
+    // By default, the latest version of the viewer API will be used.
+    var client = new Sketchfab( iframe );
+
+    // Alternatively, you can request a specific version.
+    // var client = new Sketchfab( '1.9.0', iframe );
+
+    client.init( uid, {
+        success: function onSuccess( api ){
+            api.start();
+            api.addEventListener( 'viewerready', function() {
+
+                // API is ready to use
+                // Insert your code here
+                console.log( 'Viewer is ready' );
+
+            } );
+        },
+        error: function onError() {
+            console.log( 'Viewer error' );
+        }
+    } );
+    </script>
 </body>
-   <body>
-   <iframe id="api-frame" width="80%" height="400"  allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-   <script>
-      function onSketchfabUtilityReady(){
-         sketchfabAPIUtilityInstance.removeEventListener(sketchfabAPIUtilityInstance.EVENT_INITIALIZED, onSketchfabUtilityReady);
-         //some code here..
-      };
-      var sketchfabAPIUtilityInstance = new SketchfabAPIUtility("e23b1f8a1a744092b0f675b6ed4be668", document.getElementById("api-frame"), {"autostart": 1 });
-      sketchfabAPIUtilityInstance.addEventListener(sketchfabAPIUtilityInstance.EVENT_INITIALIZED, onSketchfabUtilityReady);
-      sketchfabAPIUtilityInstance.create();
-   </script>
-</body>
+</html>
+
